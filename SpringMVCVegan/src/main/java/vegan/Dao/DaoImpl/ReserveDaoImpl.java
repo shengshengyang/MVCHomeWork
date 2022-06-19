@@ -66,4 +66,48 @@ public class ReserveDaoImpl implements ReserveDao {
 		return null;
 	}
 
+	@Override
+	public void deleteReserveById(Integer reserveId) {
+		Session session = sessionFactory.openSession();
+		
+		String hql = "from Reserve where id = :reserveId";
+		
+		Query<Reserve> query = session.createQuery(hql,Reserve.class);
+		query.setParameter("reserveId", reserveId);
+		
+		Reserve reserve = query.uniqueResult();
+		
+		if(reserve != null) {
+		session.delete(session);
+		System.out.println("Already Delete Reserve Object "+ reserveId);
+		
+		}
+	}
+
+	@Override
+	public Reserve updateReserve(Integer reserveId, Reserve reserve) {
+		Session session = sessionFactory.openSession();
+		
+		String hql = "update Reserve r set "
+				+ "r.reserveName=:reserveName and"
+				+ " r.reserveDate=:reserveDate and"
+				+ " r.reserveRestuarant=:reserveRestuarant"
+				+ " where r.reserveId= :reserveId";
+		
+		Query<Reserve> query = session.createQuery(hql,Reserve.class);
+		
+		query.setParameter("reserveName" ,reserve.getReserveName());
+		query.setParameter("reserveDate" ,reserve.getReserveDate());
+		query.setParameter("reserveRestuarant" ,reserve.getReserveRestuarant());
+		query.setParameter("reserveId" ,reserveId);
+		
+		Reserve updateReserve =  query.uniqueResult();
+		
+		if(updateReserve != null ) {
+			return updateReserve;
+		}
+		
+		return null;
+	}
+
 }

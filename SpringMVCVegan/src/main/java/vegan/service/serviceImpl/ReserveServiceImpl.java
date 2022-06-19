@@ -12,7 +12,6 @@ import vegan.model.Reserve;
 import vegan.service.ReserveService;
 
 
-
 @Service
 @Transactional
 public class ReserveServiceImpl implements ReserveService {
@@ -33,6 +32,17 @@ public class ReserveServiceImpl implements ReserveService {
 	@Override
 	public List<Reserve> reserveList() {
 		return reserveDao.reserveList();
+	}
+
+	@Override
+	public void deleteReserveById(Integer reserveId) {
+		 reserveDao.deleteReserveById(reserveId);
+		
+	}
+
+	@Override
+	public Reserve updateReserve(Integer reserveId,Reserve reserve) {
+		return reserveDao.updateReserve(reserveId,reserve);
 	}
 
 }
