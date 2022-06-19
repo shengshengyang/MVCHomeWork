@@ -29,7 +29,7 @@ public class ReserveController {
 //		Members mem = new Members("lo","male",98);
 //		m.addAttribute("members",mem);
 		m.addAttribute("Reserve", r);
-		return "vegan/reserve";
+		return "reserve";
 	}
 	
 	
@@ -44,7 +44,7 @@ public class ReserveController {
 	    	m.addAttribute("Reserve",reserve);
 	    }
 	    
-	    return "vegan/reserve";
+	    return "reserve";
 	}
 	 
 	 @GetMapping("/getReserves")
@@ -66,14 +66,14 @@ public class ReserveController {
 		
 		model.addAttribute("Reserve",reserve);
 		
-		return "vegan/reserve";
+		return "reserve";
 	}
 	
 	@DeleteMapping("/reserves/{reserveId}")
 	public String deleteReserve(@PathVariable Integer reserveId) {
 		reserveService.deleteReserveById(reserveId);
 		
-		return "vegan/reserve";
+		return "reserve";
 	}
 	
 
@@ -89,7 +89,7 @@ public class ReserveController {
 
 	        Reserve updateReserve = reserveService.getReserveById(reserveId);
 
-	        return "vegan/reserve";
+	        return "reserve";
 	    }
 
 	
