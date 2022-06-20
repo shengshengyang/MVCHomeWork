@@ -1,17 +1,18 @@
 package vegan.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import vegan.model.Reserve;
@@ -32,8 +33,6 @@ public class ReserveController {
 		return "reserve";
 	}
 	
-	
-	
 	 @GetMapping("/reserves/{reserveId}")
 	public String getReserve(@PathVariable Integer reserveId , Model m){
 
@@ -53,43 +52,65 @@ public class ReserveController {
 		 List<Reserve> reserves = reserveService.reserveList();
 		 return reserves;
 	 }
+	 
+	 @GetMapping(value = "/reserveEdit/{reserveId}", produces = { "application/json" })
+	 public String editReserveFindView(@PathVariable Integer reserveId, Model model){
+		 model.addAttribute("pk", reserveId);
+		 return "updateReserve";
+	 }
 
-	@PostMapping("/addReserve")
-	public String processAction(@ModelAttribute("Reserve") Reserve r,
-			BindingResult result,Model model) {
-		if (result.hasErrors()) {
-            return "error";
-        }
+	 //改用 Ajax請求 新增資料
+	@PostMapping(value = "/addReserve" , consumes = "application/json")
+	public @ResponseBody Map<String, String> processAction(@RequestBody Reserve reserve) {
+		Map<String, String> map = new HashMap<>();
+		Integer reserveId = reserveService.insertReserve(reserve);
 		
-		Integer reserveId = reserveService.insertReserve(r);
-		Reserve reserve = reserveService.getReserveById(reserveId);
+		Reserve checkReserve = reserveService.getReserveById(reserveId);
 		
-		model.addAttribute("Reserve",reserve);
-		
-		return "reserve";
+		if(checkReserve != null) {
+			map.put("success", "新增成功");
+		}else {
+			map.put("fail", "新增失敗");
+		}
+		return map;
 	}
 	
 	@DeleteMapping("/reserves/{reserveId}")
-	public String deleteReserve(@PathVariable Integer reserveId) {
-		reserveService.deleteReserveById(reserveId);
+	public @ResponseBody Map<String, String> deleteReserve(@PathVariable(required = true) Integer reserveId) {
+		Map<String, String> map = new HashMap<>();
 		
-		return "reserve";
+		try {
+		reserveService.deleteReserveById(reserveId);
+		map.put("success", "刪除成功");
+		}catch (Exception e) {
+			e.printStackTrace();
+			map.put("fail", "刪除失敗");
+			System.out.println("刪除失敗");
+		}
+		return map;
 	}
 	
-
-	 
-	 @PutMapping("/products/{productId}")
-	 public String updateReserve(@PathVariable Integer reserveId,Reserve reserve){
-	        Reserve checkReserve = reserveService.getReserveById(reserveId);
+	//修改訂單
+	 @PutMapping(value = "/reserves/{reserveId}", consumes = { "application/json" }, produces = { "application/json" })
+		 public @ResponseBody Map<String, String> updateReserve(
+					@RequestBody Reserve reserve,
+					@PathVariable Integer reserveId) {
+		 	Reserve checkReserve = null;
+		 	if(reserveId != null) {
+		 		checkReserve = reserveService.getReserveById(reserveId);
+		 	}
 	        if( checkReserve == null ) {
-	            return "error";
+	            throw new RuntimeException("查詢訂單編號不存在, Id=" + reserveId);
 	        }
-
-	        reserveService.updateReserve(reserveId,reserve);
-
-	        Reserve updateReserve = reserveService.getReserveById(reserveId);
-
-	        return "reserve";
+	        Map<String, String> map = new HashMap<>();
+	        try {
+	        	reserveService.updateReserve(reserveId,reserve);
+	        	map.put("success", "更新成功");
+	        } catch (Exception e) {
+	        	e.printStackTrace();
+	        	map.put("fail", "更新失敗");
+			}
+	        return map;
 	    }
 
 	

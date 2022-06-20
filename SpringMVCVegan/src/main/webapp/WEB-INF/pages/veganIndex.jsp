@@ -6,33 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Vegan Index</title>
-<script type="text/javascript" src="<c:url value='/js/jquery-1.12.2.min.js' />"></script>
-<script> 
-$(document).ready(
-	function() {
-		
-	$('#clickReserve').click(
-		function() {
-		    $.getJSON("<c:url value='/getReserves' />",
-				function(categoriesJson) {  
-				$("#reserve").empty();
-				var $table = $('<table border="1">')
-					.appendTo($('#reserve'))
-					.append("<tr><th>編號</th><th>訂位大名</th><th>訂位日期</th><th>餐廳名稱</th><th>刪除按鈕</th></tr>");
-				$("#reserve").append($table)
-				     $.each(categoriesJson,
-		             function(index, element) {
-						$('<tr>').appendTo($table)
-						.append($('<td align="center">').text(element.reserveId))
-						.append($('<td>').text(element.reserveName))
-						.append($('<td>').text(element.reserveDate))
-						.append($('<td align="right">').text(element.reserveRestuarant))
-						.append("<td><button id='deleteReserve'>Click Me(DELETE)</button></td>");    
-					  });
-				});
-			});
-});
-</script>
+<script type="text/javascript" src="<c:url value='/js/jquery-1.12.2.min.js'/>"></script>
+
 </head>
 <body>
 <table>
@@ -68,11 +43,9 @@ $(document).ready(
         </tr>
         <tr>
             <td><a href="reserve.controller">組員E : CRUD : 訂單</a></td>
-            <td><button id='clickReserve'>Click Me(QueryAll)</button></td>
+
         </tr>
     </tbody>
 </table>
-<h6>Reserve Ajax 結果亂丟</h6>
-<div id='reserve'></div>
 </body>
 </html>

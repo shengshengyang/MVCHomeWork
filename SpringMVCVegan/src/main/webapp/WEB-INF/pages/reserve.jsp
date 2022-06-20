@@ -1,31 +1,197 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Reserve</title>
+<script type="text/javascript" src="<c:url value='/js/jquery-1.12.2.min.js'/>"></script>
+<script> 
+$(document).ready(
+ function() {
+  
+ $('#clickReserve').click(
+  function() {
+      $.getJSON("<c:url value='/getReserves' />",
+    function(categoriesJson) {  
+    $("#reserve").empty();
+    var $table = $('<table border="1">')
+     .appendTo($('#reserve'))
+     .append("<tr><th>編號</th><th>訂位大名</th><th>訂位日期</th><th>餐廳名稱</th></tr>");
+    $("#reserve").append($table)
+         $.each(categoriesJson,
+               function(index, element) {
+      $('<tr>').appendTo($table)
+      .append($('<td align="center">').text(element.reserveId))
+      .append($('<td>').text(element.reserveName))
+      .append($('<td>').text(element.reserveDate))
+      .append($('<td align="right">').text(element.reserveRestuarant))
+   });
+  });
+ });
+   var sendData = document.getElementById("sendData");
+   sendData.onclick = function() {
+		hasError = false;
+  		// 讀取欄位資料	  
+		var nameValue = document.getElementById("reserveName").value;
+		var dateValue = document.getElementById("reserveDate").value;
+		var restuarantNameValue = document.getElementById("reserveRestuarant").value;
+		var div1 = document.getElementById('result1c');
+		var div2 = document.getElementById('result2c');
+		var div3 = document.getElementById('result3c');
+		var divResult = document.getElementById('resultMsg');
+		if (!nameValue){
+			setErrorFor(div1, "請輸入訂位大名");
+		} else {
+			div1.innerHTML = "";
+		}
+   		if (!dateValue){
+			setErrorFor(div2, "請輸入訂位日期");  
+   		} else if(!dateValidation(dateValue)) {
+			setErrorFor(div2, "訂位日期格式錯誤，正確格式為yyyy/MM/dd");
+   		} else {
+   			div2.innerHTML = "";
+   		}
+		if (!restuarantNameValue){
+			setErrorFor(div3, "請輸入餐廳名稱");
+		} else {
+			div3.innerHTML = "";
+		}
+   		if (hasError){
+       		return false;
+   		}
+   		var xhr1 = new XMLHttpRequest();
+   		xhr1.open("POST", "<c:url value='/addReserve' />", true);
+		var jsonReserve = {
+			"reserveName": nameValue,
+			"reserveDate": dateValue,
+			"reserveRestuarant": restuarantNameValue
+   		}
+  		xhr1.setRequestHeader("Content-Type", "application/json");
+  		xhr1.send(JSON.stringify(jsonReserve));
+  		xhr1.onreadystatechange = function() {
+			// 伺服器請求完成
+		if (xhr1.readyState == 4 && (xhr1.status == 200 || xhr1.status == 201) ) {
+  		result = JSON.parse(xhr1.responseText);
+  		if (result.fail) {
+	 		divResult.innerHTML = "<font color='red' >"
+				+ result.fail + "</font>";
+  		} else if (result.success) {
+			divResult.innerHTML = "<font color='GREEN'>"
+				+ result.success + "</font>";
+			div1.innerHTML = "";
+			div2.innerHTML = "";
+			div3.innerHTML = "";
+ 		} else {
+			if (result.nameError) {
+      			div1.innerHTML = "<font color='green' size='-2'>"
+					+ result.nameError + "</font>";
+			} else {
+      			div1.innerHTML = "";
+   			}
+			if (result.dateValue) {
+      			div2.innerHTML = "<font color='green' size='-2'>"
+					+ result.dateError + "</font>";
+			} else {
+      			div2.innerHTML = "";
+			}
+			if (result.restuarantNameValue) {
+    			div3.innerHTML = "<font color='green' size='-2'>"
+					+ result.restuarantError + "</font>";
+			} else {
+      			div3.innerHTML = "";
+			}
+ 		}};
+  		}};
+function setErrorFor(input, message){
+	input.innerHTML = "<font color='red' size='-2'>" + message + "</font>";
+    hasError = true;
+};
+function dateValidation(str) {
+	  var re = new RegExp("^([0-9]{4})[.-]{1}([0-9]{1,2})[.-]{1}([0-9]{1,2})$");
+	  var days = [0, 31, 28, 31, 30,  31, 30, 31, 31, 30, 31, 30, 31];
+	  var strDataValue;
+	  var valid = true;
+	  if ((strDataValue = re.exec(str)) != null) {
+	    var y, m, d;
+	    y = parseFloat(strDataValue[1]);
+	    if (y <= 0 || y > 9999) { /*年*/
+	      return false;
+	    } 
+	    m = parseFloat(strDataValue[2]);
+	    
+	    if (m < 1 || m > 12) { /*月*/
+	        return false;
+	    }
+	    d = parseFloat(strDataValue[3]);
+	    if ( y % 4 == 0 && y % 100 != 0 || y % 400 == 0 ){
+	       days[2] = 29;
+	    }  else {
+	       days[2] = 28;
+	    }
+	    if (d <= 0 || d > days[m]) { /*日*/
+	      valid = false;
+	    }
+	  } else {
+	    valid = false;
+	  }  
+	  return valid;
+	};
+ });
+</script>
 </head>
 <body>
-	<h3>訂位頁面</h3>
-	<form:form action="addReserve" method="post" modelAttribute="Reserve">
-		<table>
-			<tr>
-				<td><form:label path="reserveName">訂位大名: </form:label></td>
-				<td><form:input path="reserveName"/></td>
-			</tr>
-			<tr>
-				<td><form:label path="reserveDate">訂位日期: </form:label></td>
-				<td><form:input path="reserveDate"/></td>
-			</tr>
-			<tr>
-				<td><form:label path="reserveRestuarant">訂位餐廳:</form:label></td>
-				<td><form:input path="reserveRestuarant"/></td>
-			</tr>
-			<tr>
-				<td colspan="2"><form:button value="send">送出</form:button></td>
-			</tr>
-		</table>
-	</form:form>
+<h2>Reserve Ajax 查詢全部</h2>
+<button id='clickReserve'>AJAX查詢最新列表</button>
+<div id='reserve'></div>
+<div align='center'>
+<h3>新增訂位資料表單</h3>
+<hr>
+<div align="center" id='resultMsg' style="height: 18px; font-weight: bold;"></div>
+	<br>
+	<fieldset style='display: inline-block; width: 820px;'> 
+	<legend>填寫下列資料</legend>
+	<table border='1'>
+	<tr height='60'>
+		<td width='200'>&nbsp;</td>
+		<td width='400'>
+			&nbsp;訂位姓名: <input type="text" name="reserveName" id='reserveName'><br>
+		</td>
+		<td width='200' style="vertical-align:top">
+			<div id='result1c' style="height: 10px;"></div><br>
+			<div id='result1s' style="height: 10px;"></div>
+		</td>	
+	</tr>
+	<tr height='60'>
+		<td width='200'>&nbsp;</td>
+		<td width='400'>
+			&nbsp;日期: <input type="date" name="reserveDate" id='reserveDate'><br>
+		</td>
+		<td width='200' style="vertical-align:top">
+			<div id='result2c' style="height: 10px;"></div><br>
+			<div id='result2s' style="height: 10px;"></div>
+		</td>	
+	</tr>
+	<tr height='60'>		
+		<td width='200'>&nbsp;</td>
+		<td width='400'>
+			&nbsp;餐廳名稱: <input type="text" name="reserveRestuarant" id='reserveRestuarant' size='24'>
+		</td>	
+		<td width='200'>
+			<div id='result3c' style="height: 10px;"></div><br>
+			<div id='result3s' style="height: 10px;"></div>			
+		</td>	
+	</tr>
+	<tr height='50'>		
+		<td colspan='3' align='center'><button id='sendData'>送出</button></td>
+	</tr>		
+	</table>
+	</fieldset>
+	<hr>	
+	<p>	
+	<div align="center">  <a href="<c:url value='/index'  />">回前頁</a></div>
+<hr>
+</div>
 </body>
 </html>

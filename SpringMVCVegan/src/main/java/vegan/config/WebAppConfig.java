@@ -33,8 +33,8 @@ public class WebAppConfig implements WebMvcConfigurer {
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addRedirectViewController("/", "index");
-		registry.addViewController("/funny.sweet").setViewName("form");
-		registry.addViewController("/showresources.info").setViewName("showResources");
+//		registry.addViewController("/funny.sweet").setViewName("form");
+//		registry.addViewController("/showresources.info").setViewName("showResources");
 	}
 
 	@Override
