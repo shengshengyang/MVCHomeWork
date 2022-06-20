@@ -39,7 +39,7 @@ public class ProductController {
 	@GetMapping("/updateForm")
 	public String showFormForUpdate(@RequestParam("productId") Integer productId, Model model) {
 		Product oneproduct = productService.getProductById(productId);
-		model.addAttribute("oneproduct", oneproduct);
+		model.addAttribute("product", oneproduct);
 
 		return "product-form";
 	}
