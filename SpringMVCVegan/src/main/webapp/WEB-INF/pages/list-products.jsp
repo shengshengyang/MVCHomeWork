@@ -24,7 +24,6 @@
 				class="btn btn-primary" /> <br /> <br />
 			<div class="panel panel-info">
 				<div class="panel-heading">
-					<div class="panel-title">商品列表</div>
 				</div>
 				<div class="panel-body">
 					<table class="table table-striped table-bordered">
@@ -56,7 +55,7 @@
 								<td>
 									<!-- display the update link --> <a href="${updateLink}">Update</a>
 									| <a href="${deleteLink}"
-									onclick="if (!(confirm('Are you sure you want to delete this customer?'))) return false">Delete</a>
+									onclick="if (!(confirm('確定要移除此商品?'))) return false">Delete</a>
 								</td>
 
 							</tr>
