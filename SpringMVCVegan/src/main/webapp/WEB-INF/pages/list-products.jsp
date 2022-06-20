@@ -9,8 +9,10 @@
 <title>商品區</title>
 <link href="<c:url value="/resources/css/bootstrap.min.css" />"
 	rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-<link rel="stylesheet"  href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
 </head>
 </head>
 <body>
@@ -19,12 +21,11 @@
 			<h2>商品列表</h2>
 			<hr />
 
-			<input type="button" value="新增商品" 
+			<input type="button" value="新增商品"
 				onclick="window.location.href='showForm'; return false;"
 				class="btn btn-primary" /> <br /> <br />
 			<div class="panel panel-info">
-				<div class="panel-heading">
-				</div>
+				<div class="panel-heading"></div>
 				<div class="panel-body">
 					<table class="table table-striped table-bordered">
 						<tr>
@@ -50,7 +51,9 @@
 							<tr>
 								<td>${products.productName}</td>
 								<td>${products.productPrice}</td>
-								<td><a href="D:\\image\\${products.productImage}"></a></td>
+								<td><img class="card-img-top"
+									src="/Users/dean/Documents/GitHub/MVCHomeWork/SpringMVCVegan/src/main/webapp/WEB-INF/image/8c79dc03-f49e-4f9b-93ed-10a87f9d9195.jpeg"
+									alt="Card image cap"></td>
 
 								<td>
 									<!-- display the update link --> <a href="${updateLink}">Update</a>
