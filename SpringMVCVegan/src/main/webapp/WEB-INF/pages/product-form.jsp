@@ -15,38 +15,35 @@
 <body>
 <div class="container">
   <div class="col-md-offset-2 col-md-7">
-   <h2 class="text-center">Spring MVC 5 + Hibernate 5 + JSP + MySQL
-    Example</h2>
+   <h2 class="text-center">商品新增</h2>
    <div class="panel panel-info">
     <div class="panel-heading">
-     <div class="panel-title">Add Customer</div>
+     <div class="panel-title">新增商品</div>
     </div>
     <div class="panel-body">
-     <form:form action="saveCustomer" cssClass="form-horizontal"
-      method="post" modelAttribute="customer">
+     <form:form action="saveProduct" cssClass="form-horizontal"
+      method="post" modelAttribute="product">
 
-      <!-- need to associate this data with customer id -->
-      <form:hidden path="id" />
+      <!-- need to associate this data with product id -->
+      <form:hidden path="productId" />
 
       <div class="form-group">
-       <label for="firstname" class="col-md-3 control-label">First
-        Name</label>
+       <label for="firstname" class="col-md-3 control-label">商品名</label>
        <div class="col-md-9">
-        <form:input path="firstName" cssClass="form-control" />
+        <form:input path="productName" cssClass="form-control" />
        </div>
       </div>
       <div class="form-group">
-       <label for="lastname" class="col-md-3 control-label">Last
-        Name</label>
+       <label for="lastname" class="col-md-3 control-label">商品價格</label>
        <div class="col-md-9">
-        <form:input path="lastName" cssClass="form-control" />
+        <form:input path="productPrice" cssClass="form-control" />
        </div>
       </div>
 
       <div class="form-group">
-       <label for="email" class="col-md-3 control-label">Email</label>
+       <label for="email" class="col-md-3 control-label">商品圖片</label>
        <div class="col-md-9">
-        <form:input path="email" cssClass="form-control" />
+        <form:input path="productImage" cssClass="form-control" />
        </div>
       </div>
 
