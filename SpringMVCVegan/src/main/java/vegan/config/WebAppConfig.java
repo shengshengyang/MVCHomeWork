@@ -19,10 +19,9 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 //相當於mvc-servlet.xml的java程式組態
 @Configuration
-@ComponentScan(basePackages = {"vegan"})
+@ComponentScan(basePackages = { "vegan" })
 @EnableWebMvc
 public class WebAppConfig implements WebMvcConfigurer {
-	
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -41,7 +40,7 @@ public class WebAppConfig implements WebMvcConfigurer {
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
-	
+
 	@Bean
 	public InternalResourceViewResolver irViewResolver() {
 		InternalResourceViewResolver irvr1 = new InternalResourceViewResolver();
@@ -50,34 +49,33 @@ public class WebAppConfig implements WebMvcConfigurer {
 		irvr1.setOrder(6);
 		return irvr1;
 	}
-	
+
 	@Bean
 	public CommonsMultipartResolver multipartResolver() {
 		CommonsMultipartResolver cmrl = new CommonsMultipartResolver();
 		cmrl.setDefaultEncoding("UTF-8");
 		return cmrl;
 	}
-	
+
 	@Bean
 	public MappingJackson2JsonView jsonView() {
 		MappingJackson2JsonView jsonView = new MappingJackson2JsonView();
 		jsonView.setPrettyPrint(true);
 		return jsonView;
 	}
-	
+
 	@Bean
 	public Jaxb2Marshaller jaxb2Marshaller() {
 		Jaxb2Marshaller jaxb2 = new Jaxb2Marshaller();
 		jaxb2.setPackagesToScan("vegan");
 		return jaxb2;
 	}
-	
+
 	public ContentNegotiatingViewResolver negotiatingViewResolver() {
 		ContentNegotiatingViewResolver cnvrl = new ContentNegotiatingViewResolver();
 		ArrayList<View> list = new ArrayList<View>();
 		list.add(jsonView());
-		
-		
+
 		cnvrl.setDefaultViews(list);
 		return cnvrl;
 	}
