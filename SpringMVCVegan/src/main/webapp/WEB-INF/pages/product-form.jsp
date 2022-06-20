@@ -11,6 +11,8 @@
  rel="stylesheet">
 <script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+<link rel="stylesheet"  href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
@@ -18,7 +20,6 @@
    <h2 class="text-center">商品新增</h2>
    <div class="panel panel-info">
     <div class="panel-heading">
-     <div class="panel-title">新增商品</div>
     </div>
     <div class="panel-body">
      <form:form action="saveProduct" cssClass="form-horizontal"
