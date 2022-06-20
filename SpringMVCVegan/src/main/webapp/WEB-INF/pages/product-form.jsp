@@ -24,7 +24,8 @@
 				<div class="panel-heading"></div>
 				<div class="panel-body">
 					<form:form action="saveProduct" cssClass="form-horizontal"
-						method="post" modelAttribute="product" enctype='multipart/form-data'>
+						method="post" modelAttribute="product"
+						enctype='multipart/form-data'>
 
 						<!-- need to associate this data with product id -->
 						<form:hidden path="productId" />
@@ -45,7 +46,7 @@
 
 						<div class="form-group">
 							<label for="email" class="col-md-3 control-label">請選擇想上傳的圖片</label>
-							 <input type="file" class="form-control-file"
+							<input type="file" class="form-control-file"
 								id="exampleFormControlFile1" name="imageFile"
 								onchange="readURL(this)" targetID="preview_progressbarTW_img"
 								accept="image/gif, image/jpeg, image/png" /> <img

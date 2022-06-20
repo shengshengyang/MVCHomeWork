@@ -50,7 +50,7 @@
 							<tr>
 								<td>${products.productName}</td>
 								<td>${products.productPrice}</td>
-								<td>${products.productImage}</td>
+								<td><a href="D:\\image\\${products.productImage}"></a></td>
 
 								<td>
 									<!-- display the update link --> <a href="${updateLink}">Update</a>

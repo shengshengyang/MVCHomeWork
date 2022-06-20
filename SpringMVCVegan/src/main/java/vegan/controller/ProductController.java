@@ -33,7 +33,7 @@ public class ProductController {
 	public String showFormForAdd(Model model) {
 		Product product = new Product();
 		model.addAttribute("product", product);
-		
+
 		return "product-form";
 	}
 
@@ -46,9 +46,10 @@ public class ProductController {
 	}
 
 	@PostMapping("/saveProduct")
-	public String saveProduct(@ModelAttribute("product") Product product, @RequestParam("imageFile")MultipartFile file) {
-		productService.saveProduct(product,file);
-		
+	public String saveProduct(@ModelAttribute("product") Product product,
+			@RequestParam("imageFile") MultipartFile file) {
+		productService.saveProduct(product, file);
+
 		return "redirect:/product/list";
 	}
 
