@@ -3,7 +3,6 @@ package vegan.service.serviceImpl;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -35,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	// 此時的product裡面沒有圖片的路徑
-	public void saveProduct(Product product, MultipartFile file) {
+	public void saveProduct(Product product, MultipartFile file) throws IOException {
 		// 原始文件名
 		String originalFileName = file.getOriginalFilename();
 		// 取得檔名
@@ -43,17 +42,27 @@ public class ProductServiceImpl implements ProductService {
 		// 生成UUID後加上檔名
 		//String fileName = UUID.randomUUID().toString() + suffix;
 		// 圖片儲存路徑
-		String filePath = Constants.IMG_PATH + originalFileName;
-		File saveFile = new File(filePath);
+		String saveDir = "C:/temp";
+		File saveFileDir = new File(saveDir);
+		
+		if(!saveFileDir.exists()) {
+			saveFileDir.mkdir();
+		}
+		
+		File saveFile = new File(saveDir,originalFileName);
 		try {
 			// 把圖片保存在路徑中
 			file.transferTo(saveFile);
-			// 記錄檔名
+		if(originalFileName != null && originalFileName.length()!=0) {
+			productDao.saveProduct(product);
 			product.setProductImage(originalFileName);
+		}
+			
+//			// 記錄檔名
+//			product.setProductImage(originalFileName);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		productDao.saveProduct(product);
 	}
 
 	@Override

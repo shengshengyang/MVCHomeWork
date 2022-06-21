@@ -1,5 +1,6 @@
 package vegan.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import vegan.service.ProductService;
 @Controller
 @RequestMapping("/product")
 public class ProductController {
+	
 	@Autowired
 	private ProductService productService;
 
@@ -47,7 +49,7 @@ public class ProductController {
 
 	@PostMapping("/saveProduct")
 	public String saveProduct(@ModelAttribute("product") Product product,
-			@RequestParam("imageFile") MultipartFile file) {
+			@RequestParam("imageFile") MultipartFile file) throws IOException {
 		productService.saveProduct(product, file);
 
 		return "redirect:/product/list";

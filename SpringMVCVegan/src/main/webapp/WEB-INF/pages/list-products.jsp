@@ -52,7 +52,7 @@
 								<td>${products.productName}</td>
 								<td>${products.productPrice}</td>
 								<td><img class="card-img-top"
-									src="/images/${products.productImage}"
+									src="<c:url value='/images/${products.productImage}' />"
 									alt="Card image cap">
 									<a>${products.productImage}</a>
 									</td>
