@@ -52,13 +52,14 @@
 								<td>${products.productName}</td>
 								<td>${products.productPrice}</td>
 								<td><img class="card-img-top"
-									src="<c:url value='/images/${products.productImage}' />"
+									src="<c:url value='/images/${products.productImage}'/>"
 									alt="Card image cap">
 									<a>${products.productImage}</a>
 									</td>
 
 								<td>
-									<!-- display the update link --> <a href="${updateLink}">Update</a>
+									<!-- display the update link --> 
+									<a href="${updateLink}">Update</a>
 									| <a href="${deleteLink}"
 									onclick="if (!(confirm('確定要移除此商品?'))) return false">Delete</a>
 								</td>

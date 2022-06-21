@@ -1,9 +1,13 @@
 package vegan.service.serviceImpl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
 		// 生成UUID後加上檔名
 		//String fileName = UUID.randomUUID().toString() + suffix;
 		// 圖片儲存路徑
-		String saveDir = "C:/temp";
+		String saveDir = Constants.IMG_PATH;
 		File saveFileDir = new File(saveDir);
 		
 		if(!saveFileDir.exists()) {
@@ -69,6 +73,19 @@ public class ProductServiceImpl implements ProductService {
 	public void deleteProduct(Integer productId) {
 
 		productDao.deleteProduct(productId);
+	}
+	
+	public void responseFile(HttpServletResponse response, File imgFile) {
+		try (InputStream is = new FileInputStream(imgFile); OutputStream os = response.getOutputStream();) {
+			byte[] buffer = new byte[1024]; // 图片文件流缓存池
+			while (is.read(buffer) != -1) {
+				os.write(buffer);
+			}
+			os.flush();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+	
 	}
 
 }
