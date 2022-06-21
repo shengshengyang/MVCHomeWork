@@ -1,22 +1,30 @@
 package vegan.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import vegan.model.Constants;
 import vegan.model.Product;
 import vegan.service.ProductService;
 
 @Controller
 @RequestMapping("/product")
 public class ProductController {
+
 	@Autowired
 	private ProductService productService;
 
@@ -32,22 +40,23 @@ public class ProductController {
 	public String showFormForAdd(Model model) {
 		Product product = new Product();
 		model.addAttribute("product", product);
-		
+
 		return "product-form";
 	}
 
 	@GetMapping("/updateForm")
 	public String showFormForUpdate(@RequestParam("productId") Integer productId, Model model) {
 		Product oneproduct = productService.getProductById(productId);
-		model.addAttribute("oneproduct", oneproduct);
+		model.addAttribute("product", oneproduct);
 
 		return "product-form";
 	}
 
 	@PostMapping("/saveProduct")
-	public String saveProduct(@ModelAttribute("product") Product product) {
-		productService.saveProduct(product);
-		
+	public String saveProduct(@ModelAttribute("product") Product product, @RequestParam("imageFile") MultipartFile file)
+			throws IOException {
+		productService.saveProduct(product, file);
+
 		return "redirect:/product/list";
 	}
 
@@ -56,6 +65,13 @@ public class ProductController {
 		productService.deleteProduct(productId);
 
 		return "redirect:/product/list";
+	}
+
+	@RequestMapping("/showPic/{fileName}.{suffix}")
+	public void showPicture(@PathVariable("fileName") String fileName, @PathVariable("suffix") String suffix,
+			HttpServletResponse response) {
+		File imgFile = new File(Constants.IMG_PATH + fileName + "." + suffix);
+		productService.responseFile(response, imgFile);
 	}
 
 }

@@ -27,7 +27,7 @@
             <td><a href="index">點我註冊          </a></td>
         </tr>
         <tr>
-            <td><a href="index">組長: CRUD : 購物車</a></td>
+            <td><a href="product/list">組長: CRUD : 購物車</a></td>
         </tr>
         <tr>
             <td><a href="index">組員A : CRUD : 餐廳</a></td>
