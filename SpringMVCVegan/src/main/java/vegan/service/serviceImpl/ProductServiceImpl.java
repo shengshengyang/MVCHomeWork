@@ -34,22 +34,22 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	//此時的product裡面沒有圖片的路徑
+	// 此時的product裡面沒有圖片的路徑
 	public void saveProduct(Product product, MultipartFile file) {
 		// 原始文件名
 		String originalFileName = file.getOriginalFilename();
 		// 取得檔名
-		String suffix = originalFileName.substring(originalFileName.lastIndexOf("."));
+		//String suffix = originalFileName.substring(originalFileName.lastIndexOf("."));
 		// 生成UUID後加上檔名
-		String fileName = UUID.randomUUID().toString() + suffix;
+		//String fileName = UUID.randomUUID().toString() + suffix;
 		// 圖片儲存路徑
-		String filePath = Constants.IMG_PATH + fileName;
+		String filePath = Constants.IMG_PATH + originalFileName;
 		File saveFile = new File(filePath);
 		try {
-			//把圖片保存在路徑中
+			// 把圖片保存在路徑中
 			file.transferTo(saveFile);
 			// 記錄檔名
-			product.setProductImage(fileName);
+			product.setProductImage(originalFileName);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

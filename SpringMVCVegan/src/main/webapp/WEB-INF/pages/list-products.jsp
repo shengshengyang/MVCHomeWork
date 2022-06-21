@@ -52,8 +52,10 @@
 								<td>${products.productName}</td>
 								<td>${products.productPrice}</td>
 								<td><img class="card-img-top"
-									src="/Users/dean/Documents/GitHub/MVCHomeWork/SpringMVCVegan/src/main/webapp/WEB-INF/image/8c79dc03-f49e-4f9b-93ed-10a87f9d9195.jpeg"
-									alt="Card image cap"></td>
+									src="/images/${products.productImage}"
+									alt="Card image cap">
+									<a>${products.productImage}</a>
+									</td>
 
 								<td>
 									<!-- display the update link --> <a href="${updateLink}">Update</a>
