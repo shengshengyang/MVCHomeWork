@@ -43,3 +43,14 @@ reserveRestuarant nvarchar(50) not null
 );
 
 ```
+
+```
+use firstGroup; 
+
+create table product(
+id int NOT NULL IDENTITY(1,1),  
+name nvarchar(50) not null,
+price float not null,
+image nvarchar(50)  null
+);
+```

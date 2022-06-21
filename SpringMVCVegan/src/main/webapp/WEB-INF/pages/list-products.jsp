@@ -54,7 +54,6 @@
 								<td><img class="card-img-top"
 									src="<c:url value='/images/${products.productImage}'/>"
 									alt="Card image cap">
-									<a>${products.productImage}</a>
 									</td>
 
 								<td>
