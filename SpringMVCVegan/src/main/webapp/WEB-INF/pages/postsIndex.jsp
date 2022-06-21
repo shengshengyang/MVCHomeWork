@@ -7,6 +7,7 @@
 <%@page import="java.util.List"%>
 <%@ page import="vegan.model.Post" %>
 <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,6 +53,8 @@
 }
 	
 </style>
+<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 </head>
 <body >
 	<div class="textbody">
@@ -59,15 +62,11 @@
 	<h3 style="text-align:center ;">文章列表</h3>
 	<!-- Filter無法套用在使用javascript寫建立window.location的方法. -->
 	
-	<input type="button" onclick="window.location.href='../newFoodPost';" value="發表文章" />
+	<input type="button" onclick="window.location.href='./newFoodPost';" value="發表文章" />
 	
 	<hr>
-	
-
 		
 		<c:forEach var='post' varStatus='vs' items='${postlist}'>
-	
-		
 		<div>
 		<h3>
 			${post.title}
@@ -77,7 +76,7 @@
 		</p>
 		<div class="box">
 			<div class="pic">
-				<img class="img1" src="<c:url value='/${post.imgurl}'/>">
+				<img class="img1" src="<c:url value='../${post.imgurl}'/>">
 			</div>
 			<div class="ellipsis">
 			${post.postedText}
@@ -88,9 +87,7 @@
 		</div>
 		<hr>
 		
-		<a href='./deletePost?id=${post.postId}'>刪除文章</a>
-		<a href='./deletePost?id=${post.postId}'>刪除文章</a>
-		<a href='./editPost?id=${post.postId}'>編輯文章</a>
+		<a href='./deletePost/${post.postId}' class="delete">刪除文章</a>
 		<a href='./editPost/${post.postId}'>編輯文章</a>
 		<hr>
 		
@@ -105,7 +102,7 @@
 		src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 	<script>
 		$(function() {
-			$('#delete').confirm({
+			$('.delete').confirm({
 				title : '',
 				content : "請問是否確定刪除？",
 				animation : 'zoom',

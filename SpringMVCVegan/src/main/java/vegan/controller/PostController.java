@@ -24,17 +24,14 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @Controller
 @RequestMapping("/posts")
 public class PostController {
 
 	
-	
-	@GetMapping({"/"})
-	public String index() {
-		return "redirect:/postIndex";
-	}
 	
 	@Autowired
 	private PostService postService;
@@ -49,11 +46,11 @@ public class PostController {
 	}
 	
 	@PostMapping("/PostNew")
-	public String createPostImage(@ModelAttribute("posts")Post post,BindingResult result,ModelMap model) throws IOException {
+	public String createPostImage(@ModelAttribute("posts")Post post,BindingResult result,ModelMap model,HttpServletRequest request) throws IOException {
 		
 		
 		String headUrl = null;
-		String headImgFileName = "images/PostsPhoto";
+		String headImgFileName = "pimages/PostsPhoto";
 		String defaultImgurl = "images/PostsPhoto/defaultPostImage.jpg";
 		
 		if(result.hasErrors()) {
@@ -70,10 +67,11 @@ public class PostController {
 		String newFileName = new Date().getTime() + suffix;
 		System.out.println("新檔名" + newFileName);// 1478509873038.jpg
 		
-		
-		String savePath = "c:/temp/upload";
+		String savePath = request.getSession().getServletContext().getRealPath("/")+headImgFileName;
+		//String savePath = "c:/temp/upload";
 		System.out.println(savePath);
 		File headImage = new File(savePath, newFileName);
+	
 		
 //		if(!headImage.exists()) {
 //			headImage.mkdirs();
@@ -82,6 +80,8 @@ public class PostController {
 		//儲存置資料庫路徑
 		headUrl = headImgFileName + "/" + newFileName;
 		System.out.println(headUrl);
+		String path = request.getSession().getServletContext().getRealPath("/")+"src/main/webapp/WEB-F/"+headUrl;
+		System.out.println("絕對路徑:"+path);
 		picture.transferTo(headImage);
 		
 		}else {
@@ -133,8 +133,8 @@ public class PostController {
 	}
 
 
-	@RequestMapping(value = "/deletePost")
-	public String deletePost(@RequestParam("id") int id, Model model) {
+	@RequestMapping(value = "/deletePost/{id}")
+	public String deletePost(@PathVariable("id") int id, Model model) {
 
 		if (postService.deletePost(id)) {
 			model.addAttribute("message", "刪除成功");
@@ -148,7 +148,6 @@ public class PostController {
 
 	@GetMapping(value = "/editPost/{id}")
 	public String editPost(@PathVariable("id")int id,Model model) {
-//	public String editPost(@RequestParam("id") int id, Model model) {
 
 		Post post = postService.findPost(id);
 		if (post != null) {

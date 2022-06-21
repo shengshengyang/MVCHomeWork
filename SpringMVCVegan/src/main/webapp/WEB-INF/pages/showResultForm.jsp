@@ -32,7 +32,7 @@
         <br>
         <br>
         <input type="button" onclick="javascript:window.location.href='../newFoodPost' ;" value="繼續發表" />
-        <input type="button" onclick="javascript:window.location.href='./postIndex' ;" value="返回首頁" />
+        <input type="button" onclick="javascript:window.location.href='/SpringMVCVegan/posts/postIndex' ; " value="返回首頁" />
         </div>
     </div>
 </body>

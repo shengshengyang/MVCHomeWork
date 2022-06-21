@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <title>新增文章</title>
 <style>
 * {
@@ -57,6 +58,13 @@ body, html {
 	position: relative;
 	text-align: right;
 }
+
+
+.error {
+  color: red;
+
+}
+
 </style>
 </head>
 
@@ -67,23 +75,24 @@ body, html {
 			<h3>新增文章</h3>
 		</div>
 		<hr>
-		<form:form action="PostNew" enctype="multipart/form-data" method="POST" modelAttribute="posts">
+		<form:form action="PostNew" enctype="multipart/form-data" method="POST" modelAttribute="posts" id="form" >
 			上傳圖片：<form:input type="file" path="postImage"/>
 			<hr>
 			<h5 class="text">文章標題:</h5>
-			<form:textarea  path="title" class="text_title" rows="1" maxlength="100" />
+			<form:textarea  path="title" class="text_title" rows="1" maxlength="100"  />
 			<p class="wordsNum1">0/100</p>
 			<h5 class="text">文章內容:</h5>
 			<form:textarea  path="postedText" class="text_area"  rows="20" maxlength="5000" />
 			<p class="wordsNum2">0/5000</p>
 			
-			<input type="submit" name="add" value="發表文章" />
+			<input type="submit" name="add" value="發表文章" id="add"/>
 		</form:form>
 
 	</div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 	<script>
 		$(function() {
 			var checkStrLengths = function(str, maxLength) {
@@ -130,7 +139,7 @@ body, html {
 			});
 			
 
-			$('#yesno').click(function(event) {
+			$('#add').click(function(event) {
 		        if(($.confirm({
 		          title: '',
 		          animation: 'zoom',
@@ -138,7 +147,7 @@ body, html {
 		          content: '請問是否確定送出？',
 		          buttons: {
 		            是: function() {
-		                $('#sub').submit();
+		                $('form').submit();
 		            },
 		            否: function() {
 		               
@@ -148,7 +157,38 @@ body, html {
 		        event.preventDefault();
 		      }
 		      });
-
+			 $('#form').validate({
+			        /* 常用檢測屬性
+			       required:必填
+			       noSpace:空白
+			       minlength:最小長度
+			       maxlength:最大長度
+			       email:信箱格式
+			       number:數字格式
+			       url:網址格式https://www.minwt.com
+			       */
+			        rules: {
+			          title: {
+			            required: true,
+			            maxlength:100
+			          },
+			          postedText:{
+			            required: true,
+			            maxlength:5000
+			         }
+				},
+			        messages: {
+			        	title: {
+			            required:'請輸入文字'
+			          },
+			          postedText: {
+			            required:'請輸入文字',
+			        }
+					},
+			        submitHandler: function(form) {
+			          form.submit();
+			        }
+			  }); 
 		})
 	</script>
 </body>
