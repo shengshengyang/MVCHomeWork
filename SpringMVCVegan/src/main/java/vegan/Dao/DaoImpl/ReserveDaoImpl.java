@@ -87,30 +87,19 @@ public class ReserveDaoImpl implements ReserveDao {
 	@Override
 	public Reserve updateReserve(Integer reserveId, Reserve reserve) {
 		Session session = sessionFactory.openSession();
-		
-		String hql = "update Reserve r set "
-				+ "r.reserveName=:reserveName and"
-				+ " r.reserveDate=:reserveDate and"
-				+ " r.reserveRestuarant=:reserveRestuarant"
-				+ " where r.reserveId= :reserveId";
-		Query<?> query = session.createQuery(hql);
-		
-		query.setParameter("reserveName" ,reserve.getReserveName());
-		query.setParameter("reserveDate" ,reserve.getReserveDate());
-		query.setParameter("reserveRestuarant" ,reserve.getReserveRestuarant());
-		query.setParameter("reserveId" ,reserveId);
-		
-		session.beginTransaction();
 
-		
-		int executeUpdate = query.executeUpdate();
-		if(executeUpdate >0) {
-			session.getTransaction().commit();
-		}
-		
 		Reserve updateReserve = getReserveById(reserveId);
 		
+		updateReserve.setReserveId(reserveId);
+		updateReserve.setReserveName(reserve.getReserveName());
+		updateReserve.setReserveDate(reserve.getReserveDate());
+		updateReserve.setReserveRestuarant(reserve.getReserveRestuarant());
+		
+		session.beginTransaction();
+		session.update(updateReserve);
+		session.getTransaction().commit();
 		session.close();	
+		
 		return updateReserve;
 	}
 

@@ -28,7 +28,12 @@ public class Reserve {
 	
 	public Reserve() {}
 	
-	
+	public Reserve(Integer reserveId, String reserveName, String reserveDate, String reserveRestuarant) {
+		this.reserveId = reserveId;
+		this.reserveName = reserveName;
+		this.reserveDate = reserveDate;
+		this.reserveRestuarant = reserveRestuarant;
+	}
 
 	public Reserve(String reserveName, String reserveDate, String reserveRestuarant) {
 		this.reserveName = reserveName;

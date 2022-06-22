@@ -179,16 +179,20 @@ function makePUTrequest() {
        		return false;
    		}
    		
+   		var send = {
+   			'reserveId' : idValue,
+   			'reserveName': name.value,
+			'reserveDate': date.value,
+			'reserveRestuarant': restuarantName.value
+   		};
+   		
+   		
         $.ajax({
         	type: "PUT",
         	dataType: "json",
             url: '/SpringMVCVegan/reserves/'+idValue,
             contentType: 'application/json; charset=UTF-8',
-            data: {
-				"reserveName": name.value,
-				"reserveDate": date.value,
-				"reserveRestuarant": restuarantName.value
-            },
+            data: JSON.stringify(send),
             success: (result) => {
             console.log("Success:",result);
             id.value = "";
@@ -207,6 +211,7 @@ function makePUTrequest() {
 };
 
 function makeDELETErequest() {
+		alert("尼確定要刪除ㄇ?");
   		// 讀取欄位資料
   		var id = document.getElementById("reserveId");
   		var idValue = document.getElementById("reserveId").value;
