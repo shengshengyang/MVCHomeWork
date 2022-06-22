@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,10 +37,14 @@ public class ReserveController {
 	
 	 @GetMapping(value ="/reserves/{reserveId}",produces = { "application/json" })
 	 @ResponseBody
-	public Reserve getReserve(@PathVariable (required = true) Integer reserveId){
+	public ResponseEntity<Reserve> getReserve(@PathVariable (required = true) Integer reserveId){
 		Reserve reserve = reserveService.getReserveById(reserveId);
 	    
-	    return reserve;
+		if(reserve != null){
+            return ResponseEntity.status(HttpStatus.OK).body(reserve);
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
 	}
 	 
 	 @GetMapping("/getReserves")
@@ -48,13 +54,6 @@ public class ReserveController {
 		 return reserves;
 	 }
 	 
-	 @GetMapping(value = "/reserveEdit/{reserveId}", produces = { "application/json" })
-	 @ResponseBody
-	 public String editReserveFindView(@PathVariable Integer reserveId, Model model){
-		 model.addAttribute("pk", reserveId);
-		 return "updateReserve";
-	 }
-
 	 //改用 Ajax請求 新增資料
 	@PostMapping(value = "/addReserve" , consumes = "application/json")
 	public @ResponseBody Map<String, String> processAction(@RequestBody Reserve reserve) {
@@ -72,41 +71,28 @@ public class ReserveController {
 	}
 	
 	@DeleteMapping("/reserves/{reserveId}")
-	public @ResponseBody Map<String, String> deleteReserve(@PathVariable(required = true) Integer reserveId) {
-		Map<String, String> map = new HashMap<>();
-		
-		try {
+	public @ResponseBody ResponseEntity<Reserve> deleteReserve(@PathVariable(required = true) Integer reserveId) {
 		reserveService.deleteReserveById(reserveId);
-		map.put("success", "刪除成功");
-		}catch (Exception e) {
-			e.printStackTrace();
-			map.put("fail", "刪除失敗");
-			System.out.println("刪除失敗");
-		}
-		return map;
+		
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 	
 	//修改訂單
-	 @PutMapping(value = "/reserves/{reserveId}", consumes = { "application/json" }, produces = { "application/json" })
-		 public @ResponseBody Map<String, String> updateReserve(
+	 @PutMapping(value = "/reserves/{reserveId}", produces = { "application/json" })
+		 public @ResponseBody ResponseEntity<Reserve> updateReserve(
 					@RequestBody Reserve reserve,
 					@PathVariable Integer reserveId) {
 		 	Reserve checkReserve = null;
+		 	
 		 	if(reserveId != null) {
 		 		checkReserve = reserveService.getReserveById(reserveId);
 		 	}
+		 	
 	        if( checkReserve == null ) {
-	            throw new RuntimeException("查詢訂單編號不存在, Id=" + reserveId);
+	        	return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	        }
-	        Map<String, String> map = new HashMap<>();
-	        try {
-	        	reserveService.updateReserve(reserveId,reserve);
-	        	map.put("success", "更新成功");
-	        } catch (Exception e) {
-	        	e.printStackTrace();
-	        	map.put("fail", "更新失敗");
-			}
-	        return map;
+	        	Reserve updateReserve = reserveService.updateReserve(reserveId,reserve);
+	        return ResponseEntity.status(HttpStatus.OK).body(updateReserve);
 	    }
 
 	

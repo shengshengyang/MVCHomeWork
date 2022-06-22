@@ -70,18 +70,18 @@ public class ReserveDaoImpl implements ReserveDao {
 	public void deleteReserveById(Integer reserveId) {
 		Session session = sessionFactory.openSession();
 		
-		String hql = "from Reserve where id = :reserveId";
+		String hql = "delete from Reserve where id = :reserveId";
 		
-		Query<Reserve> query = session.createQuery(hql,Reserve.class);
+		Query<?> query = session.createQuery(hql);
 		query.setParameter("reserveId", reserveId);
 		
-		Reserve reserve = query.uniqueResult();
-		
-		if(reserve != null) {
-		session.delete(session);
-		System.out.println("Already Delete Reserve Object "+ reserveId);
-		
+		session.beginTransaction();
+		int executeUpdate = query.executeUpdate();
+		if(executeUpdate >0) {
+			session.getTransaction().commit();
 		}
+		
+		session.close();
 	}
 
 	@Override
@@ -93,21 +93,25 @@ public class ReserveDaoImpl implements ReserveDao {
 				+ " r.reserveDate=:reserveDate and"
 				+ " r.reserveRestuarant=:reserveRestuarant"
 				+ " where r.reserveId= :reserveId";
-		
-		Query<Reserve> query = session.createQuery(hql,Reserve.class);
+		Query<?> query = session.createQuery(hql);
 		
 		query.setParameter("reserveName" ,reserve.getReserveName());
 		query.setParameter("reserveDate" ,reserve.getReserveDate());
 		query.setParameter("reserveRestuarant" ,reserve.getReserveRestuarant());
 		query.setParameter("reserveId" ,reserveId);
 		
-		Reserve updateReserve =  query.uniqueResult();
+		session.beginTransaction();
+
 		
-		if(updateReserve != null ) {
-			return updateReserve;
+		int executeUpdate = query.executeUpdate();
+		if(executeUpdate >0) {
+			session.getTransaction().commit();
 		}
 		
-		return null;
+		Reserve updateReserve = getReserveById(reserveId);
+		
+		session.close();	
+		return updateReserve;
 	}
 
 }

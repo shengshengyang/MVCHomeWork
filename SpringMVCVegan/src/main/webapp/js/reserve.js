@@ -27,6 +27,9 @@ $(document).ready(
    sendData.onclick = function() {
 		hasError = false;
   		// 讀取欄位資料	  
+  		var id = document.getElementById("reserveId");
+		var name = document.getElementById("reserveName");
+		var date = document.getElementById("reserveDate");
 		var nameValue = document.getElementById("reserveName").value;
 		var dateValue = document.getElementById("reserveDate").value;
 		var restuarantNameValue = document.getElementById("reserveRestuarant").value;
@@ -71,6 +74,10 @@ $(document).ready(
 	 		divResult.innerHTML = "<font color='red' >"
 				+ result.fail + "</font>";
   		} else if (result.success) {
+  			id.value = "";
+            name.value = "";
+            date.value = "";
+            restuarantName.value = "";
 			divResult.innerHTML = "<font color='GREEN'>"
 				+ result.success + "</font>";
 			div1.innerHTML = "";
@@ -98,6 +105,142 @@ $(document).ready(
  		}};
   		}};
 
+
+
+ });
+function searchGETrequest() {
+  		// 讀取欄位資料
+  		var id = document.getElementById("reserveId");
+  		var idValue = document.getElementById("reserveId").value;
+		var name = document.getElementById("reserveName");
+		var date = document.getElementById("reserveDate");
+		var restuarantName = document.getElementById("reserveRestuarant");
+		var div0 = document.getElementById('result0c');
+		var divResult = document.getElementById('resultMsg');
+		
+		if (!idValue){
+			setErrorFor(div0, "請輸入Id 才能夠執行單一查詢");
+		}
+        $.ajax({
+        	type: 'GET',
+            url: '/SpringMVCVegan/reserves/'+idValue,
+            success: (result) => {
+                name.value = result.reserveName;
+                date.value = result.reserveDate.toString();
+                restuarantName.value = result.reserveRestuarant;
+                divResult.innerHTML = "<font color='GREEN'>"
+				+ "查詢成功~鳩咪" + "</font>";
+            },
+            error : (result) => {
+            console.log("Error:",result);
+            	id.value = "";
+            	 divResult.innerHTML = "<font color='RED'>"
+				+ "查詢結果不存在" + "</font>";
+            }
+        });
+};
+
+  
+function makePUTrequest() {
+		var hasError = false;
+  		// 讀取欄位資料
+  		var id = document.getElementById("reserveId");
+  		var idValue = document.getElementById("reserveId").value;
+		var name = document.getElementById("reserveName");
+		var date = document.getElementById("reserveDate");
+		var restuarantName = document.getElementById("reserveRestuarant");
+		var div0 = document.getElementById('result0c');
+		var div1 = document.getElementById('result1c');
+		var div2 = document.getElementById('result2c');
+		var div3 = document.getElementById('result3c');
+		var divResult = document.getElementById('resultMsg');
+		
+		if (!idValue){
+			setErrorFor(div0, "請輸入Id");
+		}
+		if (!name.value){
+			setErrorFor(div1, "請輸入訂位大名");
+		} else {
+			div1.innerHTML = "";
+		}
+   		if (!date.value){
+			setErrorFor(div2, "請輸入訂位日期");  
+   		} else if(!dateValidation(date.value)) {
+			setErrorFor(div2, "訂位日期格式錯誤，正確格式為yyyy/MM/dd");
+   		} else {
+   			div2.innerHTML = "";
+   		}
+		if (!restuarantName.value){
+			setErrorFor(div3, "請輸入餐廳名稱");
+		} else {
+			div3.innerHTML = "";
+		}
+   		if (hasError){
+       		return false;
+   		}
+   		
+        $.ajax({
+        	type: "PUT",
+        	dataType: "json",
+            url: '/SpringMVCVegan/reserves/'+idValue,
+            contentType: 'application/json; charset=UTF-8',
+            data: {
+				"reserveName": name.value,
+				"reserveDate": date.value,
+				"reserveRestuarant": restuarantName.value
+            },
+            success: (result) => {
+            console.log("Success:",result);
+            id.value = "";
+            name.value = "";
+            date.value = "";
+            restuarantName.value = "";
+                divResult.innerHTML = "<font color='GREEN'>"
+				+ "更新訂單資料完畢" + "</font>";
+            },
+            error : (result) => {
+            console.log("Error:",result);
+            	 divResult.innerHTML = "<font color='RED'>"
+				+ "更新對象資料有誤" + "</font>";
+            }
+        });
+};
+
+function makeDELETErequest() {
+  		// 讀取欄位資料
+  		var id = document.getElementById("reserveId");
+  		var idValue = document.getElementById("reserveId").value;
+		var name = document.getElementById("reserveName");
+		var date = document.getElementById("reserveDate");
+		var restuarantName = document.getElementById("reserveRestuarant");
+		var div0 = document.getElementById('result0c');
+		var divResult = document.getElementById('resultMsg');
+		
+		if (!idValue){
+			setErrorFor(div0, "請輸入Id 才能夠執行單一查詢");
+		}
+        $.ajax({
+        	type: 'DELETE',
+            url: '/SpringMVCVegan/reserves/'+idValue,
+            success: () => {
+            id.value = "";
+            name.value = "";
+            date.value = "";
+            restuarantName.value = "";
+            divResult.innerHTML = "<font color='GREEN'>"
+				+ "刪除成功" + "</font>";
+            },
+            error : (result) => {
+            console.log("Error:",result);
+            	 divResult.innerHTML = "<font color='RED'>"
+				+ "刪除對象結果不存在" + "</font>";
+            }
+        });
+};
+function setErrorFor(input, message){
+	input.innerHTML = "<font color='red' size='-2'>" + message + "</font>";
+    hasError = true;
+};
 
 function dateValidation(str) {
 	  var re = new RegExp("^([0-9]{4})[.-]{1}([0-9]{1,2})[.-]{1}([0-9]{1,2})$");
@@ -128,88 +271,4 @@ function dateValidation(str) {
 	    valid = false;
 	  }  
 	  return valid;
-	};
- });
-function searchGETrequest() {
-		var hasError = false;
-  		// 讀取欄位資料
-  		var idValue = document.getElementById("reserveId").value;
-		var name = document.getElementById("reserveName");
-		var date = document.getElementById("reserveDate");
-		var restuarantName = document.getElementById("reserveRestuarant");
-		var div0 = document.getElementById('result0c');
-		var divResult = document.getElementById('resultMsg');
-		
-		if (!idValue){
-			setErrorFor(div0, "請輸入Id 才能夠執行單一查詢");
-		}
-		if(idValue) {
-        $.ajax({
-            url: '/SpringMVCVegan/reserves/'+idValue,
-            type: 'GET',
-            success: function (result) {
-                name.value = result.reserveName;
-                date.value = result.reserveDate;
-                restuarantName.value = result.reserveRestuarant;
-                divResult.innerHTML = "<font color='GREEN'>"
-				+ "查詢成功~鳩咪" + "</font>";
-            }
-        });
-        }
-};
-
-  
-function makePUTrequest() {
-		var hasError = false;
-  		// 讀取欄位資料
-  		var idValue = document.getElementById("reserveId").value;
-		var nameValue = document.getElementById("reserveName").value;
-		var dateValue = document.getElementById("reserveDate").value;
-		var restuarantNameValue = document.getElementById("reserveRestuarant").value;
-		var div1 = document.getElementById('result1c');
-		var div2 = document.getElementById('result2c');
-		var div3 = document.getElementById('result3c');
-		var divResult = document.getElementById('resultMsg');
-		if (!nameValue){
-			setErrorFor(div1, "請輸入訂位大名");
-		} else {
-			div1.innerHTML = "";
-		}
-   		if (!dateValue){
-			setErrorFor(div2, "請輸入訂位日期");  
-   		} else if(!dateValidation(dateValue)) {
-			setErrorFor(div2, "訂位日期格式錯誤，正確格式為yyyy/MM/dd");
-   		} else {
-   			div2.innerHTML = "";
-   		}
-		if (!restuarantNameValue){
-			setErrorFor(div3, "請輸入餐廳名稱");
-		} else {
-			div3.innerHTML = "";
-		}
-   		if (hasError){
-       		return false;
-   		}
-		
-        $.ajax({
-            url: '/reserves/1',
-            type: 'PUT',
-            success: function (result) {
-                // Do something with the result
-            }
-        });
-};
-
-function makeDELETErequest() {
-        $.ajax({
-            url: '/reserves/1',
-            type: 'DELETE',
-            success: function (result) {
-                // Do something with the result
-            }
-        });
-};
-function setErrorFor(input, message){
-	input.innerHTML = "<font color='red' size='-2'>" + message + "</font>";
-    hasError = true;
 };

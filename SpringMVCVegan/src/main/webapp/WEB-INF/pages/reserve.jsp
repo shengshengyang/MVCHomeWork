@@ -16,7 +16,7 @@
 <div id='reserve'></div>
 </div>
 <div align='center'>
-<h3>新增訂位資料表單</h3>
+<h3>訂位資料表單</h3>
 <hr>
 <div align="center" id='resultMsg' style="height: 18px; font-weight: bold;"></div>
 	<br>
