@@ -25,10 +25,11 @@
 <%-- 		</form:form> --%>
 		
 		<form action="edit/{id}" method="GET">
+		<p>forumTitle</p> 
 		<input type="text" name="forumTitle"/><br/>
-		
+		<p>forumContent</p>
 		<input type="text" name="forumContent"/><br/>
-		
+		<p>forumDate</p> 
 		<input type="text" name="forumDate"/><br/>
 		<input type="submit" name="edit" value="Send"/>		
 		</form>

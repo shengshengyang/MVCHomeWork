@@ -56,17 +56,11 @@ public class ForumController {
 		return "success";
 	}
 	
-//	@GetMapping("/edit")
-//	public String edit() {
-//			return "editforum";
-//		}
+
 	
 	@GetMapping("/edit/{id}")
 	public String editForumById(Model model, @PathVariable Integer id , @ModelAttribute("forum")Forum forum) {
 		 forum = forumService.getForumById(id);
-//		 forum.setForumTitle(forum.getForumTitle());
-//		 forum.setForumTitle(forum.getForumContent());
-//		 forum.setForumTitle(forum.getForumTitle());
 		 model.addAttribute("forum", forum);
 		 return "editforum";
 	}

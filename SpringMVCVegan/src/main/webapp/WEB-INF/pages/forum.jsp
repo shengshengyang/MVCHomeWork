@@ -7,26 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Forum</title>
-<script type="text/javascript">
-  function confirmDelete(id){
-	  var result = confirm("確定刪除此筆記錄(帳號:" + id.trim() + ")?");
-	  if (result) {
-		  document.forms[0].putOrDelete.name = "_method";
-		  document.forms[0].putOrDelete.value = "DELETE";
-	      return true;
-	  }
-	  return false;
-  }
-  function confirmUpdate(id){
-	  var result = confirm("確定送出此筆記錄(帳號:" + id.trim() + ")?");
-	  if (result) {
-// 		  document.forms[0].putOrDelete.name = "_method";
-// 		  document.forms[0].putOrDelete.value = "PUT";
-	      return true;
-	  }
-	  return false;
-  }
-</script>
+
 </head>
 <body>
 <h2>Forum</h2>
