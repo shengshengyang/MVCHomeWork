@@ -36,6 +36,8 @@
 ```
 use firstGroup; 
 
+drop table if exists reserve;
+
 create table reserve(
 id int NOT NULL IDENTITY(1,1),  
 reserveName nvarchar(50) not null,
