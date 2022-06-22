@@ -33,17 +33,12 @@ public class ReserveController {
 		return "reserve";
 	}
 	
-	 @GetMapping("/reserves/{reserveId}")
-	public String getReserve(@PathVariable Integer reserveId , Model m){
-
-	    Reserve reserve = reserveService.getReserveById(reserveId);
+	 @GetMapping(value ="/reserves/{reserveId}",produces = { "application/json" })
+	 @ResponseBody
+	public Reserve getReserve(@PathVariable (required = true) Integer reserveId){
+		Reserve reserve = reserveService.getReserveById(reserveId);
 	    
-	    
-	    if(reserve != null) {
-	    	m.addAttribute("Reserve",reserve);
-	    }
-	    
-	    return "reserve";
+	    return reserve;
 	}
 	 
 	 @GetMapping("/getReserves")
@@ -54,6 +49,7 @@ public class ReserveController {
 	 }
 	 
 	 @GetMapping(value = "/reserveEdit/{reserveId}", produces = { "application/json" })
+	 @ResponseBody
 	 public String editReserveFindView(@PathVariable Integer reserveId, Model model){
 		 model.addAttribute("pk", reserveId);
 		 return "updateReserve";
