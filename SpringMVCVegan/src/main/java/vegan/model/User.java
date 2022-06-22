@@ -9,6 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -19,14 +20,16 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer uid;
 	
-	@NotBlank(message ="*此欗為必填且不為空格")
+	@NotBlank(message ="*請輸入email")
 	@Email(message = "*請確認email格式")
+	@Size(max=50, message="*不可超出50個字節")
 	private String email;
 
-	@Pattern(regexp="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,20}$", message="*至少包含1個大、小寫字母和數字,僅能為英數字且長度介於8~20位")
+	@Pattern(regexp="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,20}$", message="*至少包含1個大、小寫字母和數字,僅能為英數字且字節介於8~20個")
 	private String password;
 	
-	@NotBlank(message ="*此欗為必填且不為空格")
+	@NotBlank(message ="*請輸入使用者名稱")
+	@Size(max=20, message="*不可超出20個字節")
 	private String username;
 	
 	public User() {}

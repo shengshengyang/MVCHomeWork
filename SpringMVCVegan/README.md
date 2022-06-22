@@ -16,6 +16,7 @@
 -  1.請先建立好 SQL 檔案 
 -  2.請先建立好 Server content.xml
 -  3.食記 預設兩筆食記文章，可以直接進行新增、刪除、修改
+-  4.會員CRUD頁面有引入CDN,請在有網路連線的環境下執行
 
 #### 目錄結構
 
@@ -122,4 +123,21 @@ create table forum(
 
 insert into forum(forumTitle,forumContent,forumDate) values('我是標題','嗨,您好','2022-06-10 07:02')
 insert into forum(forumTitle,forumContent,forumDate) values('我是標題1','嗨,您好1','2022-06-11 07:02')
+```
+```
+use firstGroup;
+
+drop table if exists users;
+create table users(
+   uid int not null primary key identity(1,1),
+   email nvarchar(60) not null,
+   password nvarchar(30) not null,
+   username nvarchar(50) not null
+);
+
+insert into users(email, password, username) values('jason123@mail.com','Test1234', '一二三');
+insert into users(email, password, username) values('jason456@mail.com','1234tesT', 'ONE2three');
+
+select * from users;
+
 ```
