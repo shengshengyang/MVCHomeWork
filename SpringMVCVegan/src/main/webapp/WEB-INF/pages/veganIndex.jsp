@@ -36,7 +36,7 @@
             <td><a href="posts/postIndex">組員B : CRUD : 食記</a></td>
         </tr>
         <tr>
-            <td><a href="index">組員C : CRUD : 會員</a></td>
+            <td><a href="<c:url value='/user/list' />">組員C : CRUD : 會員</a></td>
         </tr>
         <tr>
 			<td><a href="list">組員D : CRUD : 網誌</a></td>
