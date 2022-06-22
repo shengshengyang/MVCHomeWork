@@ -33,7 +33,7 @@
             <td><a href="index">組員A : CRUD : 餐廳</a></td>
         </tr>
         <tr>
-            <td><a href="index">組員B : CRUD : 食記</a></td>
+            <td><a href="posts/postIndex">組員B : CRUD : 食記</a></td>
         </tr>
         <tr>
             <td><a href="index">組員C : CRUD : 會員</a></td>
