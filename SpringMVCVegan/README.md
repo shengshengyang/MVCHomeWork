@@ -110,3 +110,16 @@ INSERT INTO post (title, postedDate, postedText, imgurl) VALUES ('【台北東�
 
 喜歡吃韓式燒肉、日本料理的人，拜託你一定要收藏《熟・菜豚屋》，找一天犒賞自己一下來吃吧！','images\PostsPhoto\1655871979555.jpg');
 ```
+```
+DROP TABLE IF EXISTS forum
+use veganDB
+create table forum(
+   id int not null primary key identity(1,1),
+   forumTitle nvarchar(50) not null,
+   forumContent nvarchar(50) not null,
+   forumDate  datetime NOT NULL
+);
+
+insert into forum(forumTitle,forumContent,forumDate) values('我是標題','嗨,您好','2022-06-10 07:02')
+insert into forum(forumTitle,forumContent,forumDate) values('我是標題1','嗨,您好1','2022-06-11 07:02')
+```
