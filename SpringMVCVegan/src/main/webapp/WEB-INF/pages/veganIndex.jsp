@@ -39,7 +39,11 @@
             <td><a href="index">組員C : CRUD : 會員</a></td>
         </tr>
         <tr>
+<<<<<<< HEAD
             <td><a href="posts/postIndex">組員D : CRUD : 網誌</a></td>
+=======
+            <td><a href="list">組員D : CRUD : 網誌</a></td>
+>>>>>>> poyu
         </tr>
         <tr>
             <td><a href="reserve.controller">組員E : CRUD : 訂單</a></td>
