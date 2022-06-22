@@ -27,6 +27,7 @@ public class ForumController {
 	@Autowired
 	private ForumService forumService;
 	
+
 	@RequestMapping(value = "/list" , method = RequestMethod.GET)
 	public String listForum( Model model) {
 		List<Forum> forums = forumService.getForums();
@@ -51,7 +52,6 @@ public class ForumController {
 
 	@GetMapping(value="/list/{id}")
 	public String deleteForumById(@PathVariable Integer id) {
-		System.out.println(11122233);
 		forumService.deleteForumByPrimaryKey(id);	
 		return "success";
 	}
@@ -60,10 +60,13 @@ public class ForumController {
 	
 	@GetMapping("/edit/{id}")
 	public String editForumById(Model model, @PathVariable Integer id , @ModelAttribute("forum")Forum forum) {
+		
+		
 		 forum = forumService.getForumById(id);
 		 model.addAttribute("forum", forum);
-		 return "editforum";
+		 return "editforum";	 
 	}
+	
 	
 	@GetMapping("/edit")
 	public String updateforum( @ModelAttribute("forum")Forum forum , Model model) {
@@ -71,9 +74,6 @@ public class ForumController {
 		return "success";
 		
 	}
-
-	
-
 	
 	
 }

@@ -12,12 +12,11 @@
 <body>
 <h3>add forum</h3>
 		<form action="add.controller" method="get" enctype="multipart/form-data">
-				<p>title</p>
+				<p>標題</p>
 				<input type="text" name="forumTitle" /><br/>
-				<p>Content</p>
+				<p>留言</p>
 				<input type="text" name="forumContent" /><br/>
-				<p>最後發表時間<font size='-3' color='blue'>(yyyy-MM-dd
-								)</font>：<br>&nbsp;</p>
+				<p>發表日期<font size='-3' color='blue'>(yyyy-MM-dd)</font>：<br>&nbsp;</p>
 				<input type="text" name="forumDate" value="" /><br/>
 		
 		<input type="submit" value="Send"/>

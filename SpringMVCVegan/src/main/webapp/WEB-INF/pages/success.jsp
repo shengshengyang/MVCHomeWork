@@ -8,10 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-刪除成功<br/>
+<p align="center"> 刪除成功 </p>
 <form action="list" method="GET">
 <!-- <a href="list">回首頁</a> -->
- <a href="<c:url value='../list'/>">回首頁</a>
+ <p align="center"><a href="<c:url value='../list'/>">回首頁</a></p>
 </form>
 </body>
 </html>

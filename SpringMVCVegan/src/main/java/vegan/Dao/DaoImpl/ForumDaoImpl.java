@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import vegan.Dao.ForumDao;
 import vegan.model.Forum;
+import vegan.model.Product;
 
 @Repository
 @Transactional
@@ -57,7 +58,7 @@ public class ForumDaoImpl implements ForumDao {
 	@Override
 	public void updateForum(Forum forum) {
 		Session session = sessionFactory.getCurrentSession();
-		session.update(forum);
+		session.saveOrUpdate(forum);
 		
 	}
 
@@ -83,5 +84,22 @@ public class ForumDaoImpl implements ForumDao {
 		}
 		return bean;
 	}
+	
+	
+//	@Override
+//	public Forum getForumById1(int id) {
+//		Forum bean = null;
+//		Session session = sessionFactory.openSession();
+//		String hql  = "FROM Forum forum WHERE forum.forumid = :id";
+//		Query<Forum> query = session.createQuery(hql,Forum.class);
+//		query.setParameter("forumId", id);
+//		Forum forum = query.uniqueResult();
+//		session.close();
+//		if(forum != null) {
+//			return forum;
+//	}
+//		return null;
+		
+	
 
 }

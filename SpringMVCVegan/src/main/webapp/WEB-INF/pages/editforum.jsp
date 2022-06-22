@@ -10,6 +10,8 @@
 <meta charset="UTF-8">
 <title>add forum</title>
 
+
+
 </head>
 <body>
 <h3>add forum</h3>
@@ -23,15 +25,19 @@
 			
 <%-- 			<input type='submit' value='修改' name='updateBtn' onclick="return confirmUpdate('${forum.id}');"> --%>
 <%-- 		</form:form> --%>
+		<form action="edit/{id}" method="get">
 		
-		<form action="edit/{id}" method="GET">
 		<p>forumTitle</p> 
-		<input type="text" name="forumTitle"/><br/>
+		<input type="text" name="forumTitle" /><br/>
 		<p>forumContent</p>
-		<input type="text" name="forumContent"/><br/>
+		<input type="text" name="forumContent" /><br/>
 		<p>forumDate</p> 
-		<input type="text" name="forumDate"/><br/>
-		<input type="submit" name="edit" value="Send"/>		
+		<input type="text" name="forumDate" /><br/>
+		
+		
+		</form>
+		<form  action="edit" method="get">
+			<input type="submit" name="edit" value="Send"/>	
 		</form>
 </body>
 </html>
