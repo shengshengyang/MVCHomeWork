@@ -30,7 +30,7 @@
             <td><a href="product/list">組長: CRUD : 購物車</a></td>
         </tr>
         <tr>
-            <td><a href="index">組員A : CRUD : 餐廳</a></td>
+            <td><a href="restaurant/restaurants">組員A : CRUD : 餐廳</a></td>
         </tr>
         <tr>
             <td><a href="posts/postIndex">組員B : CRUD : 食記</a></td>

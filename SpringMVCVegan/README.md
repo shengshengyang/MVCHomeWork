@@ -141,3 +141,19 @@ insert into users(email, password, username) values('jason456@mail.com','1234tes
 select * from users;
 
 ```
+
+```
+use firstGroup; 
+
+create table restaurant(
+	restaurantNumber int IDENTITY(1,1) PRIMARY KEY,
+	restaurantName nvarchar(20) NOT NULL,
+	restaurantTel nvarchar(15),
+	restaurantAddress nvarchar(50) NOT NULL,
+	restaurantCategory nvarchar(20),
+	restaurantType nvarchar(20),
+	restaurantBusinessHours nvarchar(200),
+	restaurantScore nvarchar(10),
+	restaurantMap nvarchar(MAX)
+);
+```
