@@ -71,4 +71,24 @@ public class UserDAOImpl implements UserDAO {
 		return user;
 	}
 
+	@SuppressWarnings("rawtypes")
+	@Override
+	public boolean isEmailExist(String email) {
+		
+		User user = null;
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "FROM User u WHERE u.email = :email";
+
+		Query query = session.createQuery(hql);
+		query.setParameter("email", email);
+		user = (User) query.uniqueResult();
+
+		if (user != null) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+
 }

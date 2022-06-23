@@ -42,7 +42,19 @@ public class UserController {
     }
 
     @PostMapping("/user/saveUser")
-    public String saveCustomer(@Valid @ModelAttribute("user") User theUser, BindingResult result) {
+    public String saveCustomer(@Valid @ModelAttribute("user") User theUser, BindingResult result, Model m) {
+    	
+    	Map<String, String> errors = new HashMap<String, String>();
+		m.addAttribute("errors", errors);
+		
+		boolean isEmailExist = userService.isEmailExist(theUser.getEmail());
+		
+		if(isEmailExist) {
+			errors.put("msg", "此Email已存在,請更換");
+			return "user-form";
+		}
+    	
+    	System.out.println(theUser.getEmail());
     	
     	if(result.hasErrors()) {
     		return "user-form";
@@ -50,7 +62,6 @@ public class UserController {
     	
     	userService.saveUser(theUser);
         return "redirect:/user/list";
-//    	return "veganIndex";
     }
 
     @GetMapping("/user/updateForm")

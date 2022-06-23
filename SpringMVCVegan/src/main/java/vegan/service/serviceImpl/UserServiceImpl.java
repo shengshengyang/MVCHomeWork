@@ -40,4 +40,9 @@ public class UserServiceImpl implements UserService {
 		return userDAO.login(email, password);
 	}
 
+	@Override
+	public boolean isEmailExist(String email) {
+		return userDAO.isEmailExist(email);
+	}
+
 }

@@ -15,5 +15,7 @@ public interface UserDAO {
     public void deleteUser(Integer theId);
     
     public User login(String email, String password);
+    
+    public boolean isEmailExist(String email);
 
 }
