@@ -33,15 +33,13 @@
        <th>操作</th>
       </tr>
 
-      <!-- loop over and print our customers -->
+      
       <c:forEach var="tempUser" items="${users}">
 
-       <!-- construct an "update" link with customer id -->
        <c:url var="updateLink" value="/user/updateForm">
         <c:param name="userId" value="${tempUser.uid}" />
        </c:url>
 
-       <!-- construct an "delete" link with customer id -->
        <c:url var="deleteLink" value="/user/delete">
         <c:param name="userId" value="${tempUser.uid}" />
        </c:url>
@@ -52,7 +50,7 @@
         <td>${tempUser.username}</td>
 
         <td>
-         <!-- display the update link --> <a href="${updateLink}">修改</a>
+          <a href="${updateLink}">修改</a>
          | <a href="${deleteLink}"
          onclick="if (!(confirm('確定要刪除此使用者嗎?'))) return false">刪除</a>
         </td>

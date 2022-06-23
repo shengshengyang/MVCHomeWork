@@ -26,7 +26,6 @@
      <form:form action="saveUser" cssClass="form-horizontal"
       method="post" modelAttribute="user">
 
-      <!-- need to associate this data with customer id -->
       <form:hidden path="uid" />
 
       <div class="form-group">
@@ -53,7 +52,7 @@
       </div>
 
       <div class="form-group">
-       <!-- Button -->
+       
        <div class="col-md-offset-3 col-md-9">
         <form:button cssClass="btn btn-primary">送出</form:button>
        </div>
