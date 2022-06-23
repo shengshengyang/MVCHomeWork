@@ -54,7 +54,10 @@
       <div class="form-group">
        
        <div class="col-md-offset-3 col-md-9">
-        <form:button cssClass="btn btn-primary">送出</form:button>
+        <form:button cssClass="btn btn-primary">送出</form:button>&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" value="回到會員CRUD"
+    onclick="window.location.href='list';"/>
        </div>
       </div>
 

@@ -22,6 +22,8 @@
 		</tr>
 		<tr>
 			<td><button type="submit" value="login">Login</button></td>
+			<td><input type="button" value="回到首頁"
+    onclick="window.location.href='http://localhost:8080/SpringMVCVegan/index';"/></td>
 			<td>${errors.msg}</td>		
 		</tr>
 	</table>

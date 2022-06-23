@@ -19,6 +19,9 @@
    <input type="button" value="新增 User"
     onclick="window.location.href='showForm'; return false;"
     class="btn btn-primary" />
+   <input type="button" value="回到首頁"
+    onclick="window.location.href='http://localhost:8080/SpringMVCVegan/index'; return false;"
+    class="btn btn-primary" />
     <br/><br/>
    <div class="panel panel-info">
     <div class="panel-heading">

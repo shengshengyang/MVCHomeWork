@@ -21,27 +21,27 @@ import vegan.model.User;
 import vegan.service.UserService;
 
 @Controller
-@RequestMapping("/user")
+//@RequestMapping("/user")
 public class UserController {
 	
 	@Autowired
     private UserService userService;
 	
-	@GetMapping("/list")
+	@GetMapping("/user/list")
     public String listCustomers(Model m) {
         List <User> theUsers = userService.getUsers();
         m.addAttribute("users", theUsers);
         return "list-users";
     }
 	
-	@GetMapping("/showForm")
+	@GetMapping("/user/showForm")
     public String showFormForAdd(Model m) {
 		User theUser = new User();
         m.addAttribute("user", theUser);
         return "user-form";
     }
 
-    @PostMapping("/saveUser")
+    @PostMapping("/user/saveUser")
     public String saveCustomer(@Valid @ModelAttribute("user") User theUser, BindingResult result) {
     	
     	if(result.hasErrors()) {
@@ -49,11 +49,11 @@ public class UserController {
     	}
     	
     	userService.saveUser(theUser);
-//        return "redirect:/user/list";
-    	return "veganIndex";
+        return "redirect:/user/list";
+//    	return "veganIndex";
     }
 
-    @GetMapping("/updateForm")
+    @GetMapping("/user/updateForm")
     public String showFormForUpdate(@RequestParam("userId") Integer theId,
         Model m) {
         User theUser = userService.getUser(theId);
@@ -61,18 +61,18 @@ public class UserController {
         return "user-form";
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/user/delete")
     public String deleteUser(@RequestParam("userId") Integer theId) {
     	userService.deleteUser(theId);
         return "redirect:/user/list";
     }
         
-    @RequestMapping("/goLogin")
+    @RequestMapping("/user/goLogin")
 	public String login() {
 		return "login";
 	}
     
-    @RequestMapping("/login")
+    @RequestMapping("/user/login")
 	public String processAction(HttpSession session, String email, String password, Model m) {
     	Map<String, String> errors = new HashMap<String, String>();
 		m.addAttribute("errors", errors);
