@@ -1,7 +1,10 @@
 package vegan.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +49,8 @@ public class UserController {
     	}
     	
     	userService.saveUser(theUser);
-        return "redirect:/user/list";
+//        return "redirect:/user/list";
+    	return "veganIndex";
     }
 
     @GetMapping("/updateForm")
@@ -62,5 +66,50 @@ public class UserController {
     	userService.deleteUser(theId);
         return "redirect:/user/list";
     }
+        
+    @RequestMapping("/goLogin")
+	public String login() {
+		return "login";
+	}
+    
+    @RequestMapping("/login")
+	public String processAction(HttpSession session, String email, String password, Model m) {
+    	Map<String, String> errors = new HashMap<String, String>();
+		m.addAttribute("errors", errors);
+		
+		if(email==null || email.length()==0) {
+			errors.put("name", "請輸入email");
+		}
+		
+		if(password==null || password.length()==0) {
+			errors.put("pwd", "請輸入密碼");
+		}
+		
+		if(errors!=null && !errors.isEmpty()) {
+			return "login";
+		}
+		
+		User result = new User();
+		
+		result = userService.login(email, password);
+		
+		if(result != null) {
+			String username = result.getUsername();
+			System.out.println(username);
+			session.setAttribute("userLoginInfo", username);
+			m.addAttribute("username", username);
+			
+			return "loginSuccess";
+		}
+		
+		errors.put("msg", "帳號密碼錯誤");
+		return "login";
+	}
+    
+    @RequestMapping("/logout")
+	public String logout(HttpSession session) {
+    	session.removeAttribute("userLoginInfo");
+		return "veganIndex";
+	}
 
 }

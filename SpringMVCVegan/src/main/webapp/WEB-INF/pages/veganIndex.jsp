@@ -20,12 +20,21 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td><a href="index">點我登入        </a></td>
-        </tr>
-        <tr>
-            <td><a href="index">點我註冊          </a></td>
-        </tr>
+    	<c:choose>
+    		<c:when test="${not empty userLoginInfo}">
+        		<tr>
+            		<td><a href="<c:url value='/user/logout' />">${username}點我登出          </a></td>
+        		</tr>
+        	</c:when>
+    		<c:otherwise>
+        		<tr>
+            		<td><a href="<c:url value='/user/goLogin' />">點我登入        </a></td>
+        		</tr>
+        		<tr>
+            		<td><a href="<c:url value='/user/showForm' />">點我註冊          </a></td>
+        		</tr>
+        	</c:otherwise>
+    	</c:choose>
         <tr>
             <td><a href="product/list">組長: CRUD : 購物車</a></td>
         </tr>

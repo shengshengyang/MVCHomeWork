@@ -2,13 +2,13 @@ package vegan.Dao.DaoImpl;
 
 import java.util.List;
 
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +23,7 @@ public class UserDAOImpl implements UserDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List<User> getUsers() {
 		Session session = sessionFactory.getCurrentSession();
@@ -53,6 +53,22 @@ public class UserDAOImpl implements UserDAO {
 		Session session = sessionFactory.getCurrentSession();
 		User theUser = session.byId(User.class).load(theId);
         session.delete(theUser);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public User login(String email, String password) {
+
+		User user = null;
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "FROM User u WHERE u.email = :email AND u.password = :password";
+
+		Query query = session.createQuery(hql);
+		query.setParameter("email", email);
+		query.setParameter("password", password);
+		user = (User) query.uniqueResult();
+
+		return user;
 	}
 
 }

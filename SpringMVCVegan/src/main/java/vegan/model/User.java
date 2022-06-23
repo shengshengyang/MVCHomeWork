@@ -25,7 +25,7 @@ public class User {
 	@Size(max=50, message="*不可超出50個字節")
 	private String email;
 
-	@Pattern(regexp="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,20}$", message="*至少包含1個大、小寫字母和數字,僅能為英數字且字節介於8~20個")
+	@Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,20}$", message="*至少包含1個大、小寫字母和數字,僅能為英數字且字節介於8~20個")
 	private String password;
 	
 	@NotBlank(message ="*請輸入使用者名稱")
@@ -33,6 +33,13 @@ public class User {
 	private String username;
 	
 	public User() {}
+	
+	public User(Integer uid,String email,String password,String username) {
+		this.uid = uid;
+		this.email = email;
+		this.password = password;
+		this.username = username;
+	}
 
 	public Integer getUid() {
 		return uid;

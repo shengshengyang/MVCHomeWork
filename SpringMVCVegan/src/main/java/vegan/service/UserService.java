@@ -13,5 +13,7 @@ public interface UserService {
     public User getUser(Integer theId);
 
     public void deleteUser(Integer theId);
+    
+    public User login(String email, String password);
 
 }

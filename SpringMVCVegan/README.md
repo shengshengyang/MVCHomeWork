@@ -17,6 +17,9 @@
 -  2.請先建立好 Server content.xml
 -  3.食記 預設兩筆食記文章，可以直接進行新增、刪除、修改
 -  4.會員CRUD頁面有引入CDN,請在有網路連線的環境下執行
+-  5.執行新增修改和註冊會員時會先跳回主頁面,註冊後確認已登入再查看會員表
+-  6.登入時的Email和Password分別對應users表中的email及password欄位
+-  7.提供登入測試用帳密(確認已建立users表格):  jason123@mail.com , Test1234
 
 #### 目錄結構
 
@@ -140,20 +143,4 @@ insert into users(email, password, username) values('jason456@mail.com','1234tes
 
 select * from users;
 
-```
-
-```
-use firstGroup; 
-
-create table restaurant(
-	restaurantNumber int IDENTITY(1,1) PRIMARY KEY,
-	restaurantName nvarchar(20) NOT NULL,
-	restaurantTel nvarchar(15),
-	restaurantAddress nvarchar(50) NOT NULL,
-	restaurantCategory nvarchar(20),
-	restaurantType nvarchar(20),
-	restaurantBusinessHours nvarchar(200),
-	restaurantScore nvarchar(10),
-	restaurantMap nvarchar(MAX)
-);
 ```
