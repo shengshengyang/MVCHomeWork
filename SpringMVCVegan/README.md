@@ -116,7 +116,7 @@ INSERT INTO post (title, postedDate, postedText, imgurl) VALUES ('【台北東�
 ```
 ```
 DROP TABLE IF EXISTS forum
-use veganDB
+use firstGroup
 create table forum(
    id int not null primary key identity(1,1),
    forumTitle nvarchar(50) not null,
