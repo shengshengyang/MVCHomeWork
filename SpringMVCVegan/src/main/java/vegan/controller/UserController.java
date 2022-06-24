@@ -42,18 +42,22 @@ public class UserController {
     }
 
     @PostMapping("/user/saveUser")
-    public String saveCustomer(@Valid @ModelAttribute("user") User theUser, BindingResult result, Model m) {
+    public String saveCustomer(@Valid @ModelAttribute("user") User theUser, BindingResult result, HttpSession session, Model m) {
+    	
+    	String theCheckEmail = (String) session.getAttribute("checkmail");
     	
     	Map<String, String> errors = new HashMap<String, String>();
 		m.addAttribute("errors", errors);
 		
 		boolean isEmailExist = userService.isEmailExist(theUser.getEmail());
 		
-		if(isEmailExist) {
-			errors.put("msg", "此Email已存在,請更換");
-			return "user-form";
+		if(!theUser.getEmail().equals(theCheckEmail)) {
+			if(isEmailExist) {
+				errors.put("msg", "此Email已存在,請更換");
+				return "user-form";
+			}			
 		}
-    	
+		
     	System.out.println(theUser.getEmail());
     	
     	if(result.hasErrors()) {
@@ -61,14 +65,17 @@ public class UserController {
     	}
     	
     	userService.saveUser(theUser);
+    	session.removeAttribute("checkmail");
         return "redirect:/user/list";
     }
 
     @GetMapping("/user/updateForm")
-    public String showFormForUpdate(@RequestParam("userId") Integer theId,
+    public String showFormForUpdate(HttpSession session, @RequestParam("userId") Integer theId,
         Model m) {
         User theUser = userService.getUser(theId);
         m.addAttribute("user", theUser);
+        String checkEmail = theUser.getEmail();
+        session.setAttribute("checkmail", checkEmail);
         return "user-form";
     }
 
@@ -106,7 +113,6 @@ public class UserController {
 		
 		if(result != null) {
 			String username = result.getUsername();
-			System.out.println(username);
 			session.setAttribute("userLoginInfo", username);
 			m.addAttribute("username", username);
 			

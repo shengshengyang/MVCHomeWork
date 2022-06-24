@@ -23,7 +23,7 @@
     	<c:choose>
     		<c:when test="${not empty userLoginInfo}">
         		<tr>
-            		<td><a href="<c:url value='/logout' />">${username}點我登出          </a></td>
+            		<td><a href="<c:url value='/logout' />">點我登出          </a></td>
         		</tr>
         	</c:when>
     		<c:otherwise>
